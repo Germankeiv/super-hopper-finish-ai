@@ -1,0 +1,55 @@
+========== FILE START: README.md ==========
+# Super Hopper Finish AI
+
+Reconstructed Java Paper server plugin (not a Fabric/Forge mod). Targets Paper 1.20.4 and Java 17.
+
+## Build
+Install JDK 17 and Maven. Run `mvn clean package`. Copy `target/super-hopper-1.0.0.jar` to your Paper server's `plugins` folder and restart.
+
+## Features
+- Special hopper item from `/superhopper give [player] [amount]`.
+- Persistent marking of placed Super Hoppers and custom drops when broken.
+- Per-chunk limit, configurable scan interval and collection radius.
+- Pulls nearby *dropped item entities* into the hopper inventory; respects hopper inventory capacity.
+- Global allowlist (`filter-items`) and denylist (`filter-exclude`) in config.yml.
+- Right-click information GUI, language command (`en`/`es`), admin reload, permissions and give cooldown.
+
+## Important limitations
+- This is an initial reconstructed source release, **not yet compile-tested or server-tested**.
+- It does **not** consolidate all vanilla hopper inventories into one hopper or replace vanilla hopper transfer logic.
+- No per-hopper GUI filter editing yet; filters are configured globally in config.yml.
+- World-generation chest rewards are not implemented (config flag reserved and disabled).
+- Language selection is not persisted across server restarts.
+- Scan cost scales with loaded hopper tile entities; benchmark before using at scale.
+- This is a Paper/Spigot-style plugin; CurseForge listing category and platform compatibility must be checked before publication.
+
+## Permissions
+- `superhopper.give` (op default)
+- `superhopper.admin` (op default)
+- `superhopper.use` (everyone default)
+
+
+## Custom Super Hopper appearance (Minecraft 1.20.4)
+This edition adds a **cyan/purple Arcane Collector** inventory texture, a small item-display overlay above placed Super Hoppers, and cyan/purple magical particles. The in-game overlay is intentionally an overlay, **not a complete 3D replacement** of the vanilla hopper. Normal hoppers are unaffected.
+
+1. Build the plugin with `mvn package` using Java 17+ and put the resulting JAR in the Paper server `plugins/` folder.
+2. Extract `SuperHopper-ResourcePack.zip` into the Minecraft **resourcepacks** folder (or put the ZIP directly in that folder) and enable it under Options > Resource Packs.
+3. Restart the server and use `/superhopper give`. Place a Super Hopper to see particles and the custom icon hovering above it.
+4. Optional: distribute the pack using `resource-pack` and `resource-pack-sha1` in `server.properties` for automatic player downloads.
+
+The pack targets **Java Edition 1.20.4** (pack_format 22). Other Minecraft versions may need a different pack format and model format.
+
+**Status:** The source is packaged, but this environment has not run a Paper server integration test.
+
+
+## 3D Arcane Collector model
+The included `resource-pack/` contains a true cuboid Minecraft JSON 3D item model, with dark-metal rails, cyan inlays and purple core. This is a stylized approximation of the concept illustration, not a literal conversion of the image. The plugin uses a temporary ItemDisplay above the normal hopper block, which means the underlying hopper is still visible. This is intentional for compatibility without a client-side mod. The model is not a replacement block model.
+
+Zip the **contents** of `resource-pack/` (so `pack.mcmeta` is at ZIP root) and install it as a Minecraft 1.20.4 client resource pack. This project targets Paper 1.20.4 and Java 17. Use `mvn package` to compile; test on a backup server before production. `visuals.particle-density`, `visuals.view-distance`, and `visuals.particle-interval-ticks` control visual cost.
+
+========== FILE END: README.md ==========
+
+========== FILE START: pom.xml ==========
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"><modelVersion>4.0.0</modelVersion><groupId>com.germankeiv</groupId><artifactId>super-hopper</artifactId><version>1.0.0</version><packaging>jar</packaging><properties><maven.compiler.release>17</maven.compiler.release><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding></properties><repositories><repository><id>papermc</id><url>https://repo.papermc.io/repository/maven-public/</url></repository></repositories><dependencies><dependency><groupId>io.papermc.paper</groupId><artifactId>paper-api</artifactId><version>1.20.4-R0.1-SNAPSHOT</version><scope>provided</scope></dependency></dependencies><build><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.13.0</version></plugin></plugins></build></project>
+
+========== FILE END: pom.xml ==========
