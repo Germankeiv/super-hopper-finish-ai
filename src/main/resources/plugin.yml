@@ -1,0 +1,19 @@
+name: SuperHopper
+version: 1.0.0
+main: com.germankeiv.superhopper.SuperHopperPlugin
+api-version: '1.20'
+author: GermanKeiv
+description: Chunk-limited smart hoppers with filtering and a management GUI.
+commands:
+  superhopper:
+    description: Manage Super Hoppers
+    usage: /superhopper <give|reload|lang|info>
+    aliases: [shopper]
+permissions:
+  superhopper.give:
+    default: op
+  superhopper.admin:
+    default: op
+  superhopper.use:
+    default: true
+
