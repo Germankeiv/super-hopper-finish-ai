@@ -1,0 +1,36 @@
+name: Build Super Hopper
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - name: Build plugin
+        run: mvn --batch-mode --no-transfer-progress clean package
+      - name: Upload plugin JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: SuperHopper-Plugin-JAR
+          path: target/*.jar
+          if-no-files-found: error
+      - name: Recreate 3D resource pack
+        run: python3 tools/generate_resource_pack.py
+      - name: Upload resource pack
+        uses: actions/upload-artifact@v4
+        with:
+          name: SuperHopper-3D-ResourcePack
+          path: SuperHopper-3D-ResourcePack.zip
+          if-no-files-found: error
+
