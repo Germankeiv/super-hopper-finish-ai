@@ -1,0 +1,19 @@
+# All times in seconds. Scan interval is how often nearby dropped items are collected.
+cooldown: 10
+pull-radius: 2
+scan-interval: 5
+required-permission: superhopper.give
+max-per-chunk: 1
+filter-enabled: true
+filter-items: []
+filter-exclude: []
+# Chest rewards on world generation are intentionally disabled in this release.
+world-generation-rewards-enabled: false
+
+# Visuals: resource pack needed for the custom item texture.
+visuals:
+  enabled: true
+  particles: true
+  particle-interval-ticks: 12
+  particle-density: 3
+  view-distance: 24
